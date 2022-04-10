@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import apiClient from '../../services/apiClient';
+import bookingDialogService from '../../services/bookingDialogService';
 
 export default function Homes() {
 
@@ -31,7 +32,8 @@ export default function Homes() {
                         <button
                          data-testid="home-booking-btn"
                          type="button"
-                         className="btn btn-primary">Book</button>
+                         className="btn btn-primary"
+                         onClick={ () => bookingDialogService.open(home)}>Book</button>
                     </div>
                 </div>
             </div>

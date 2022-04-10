@@ -2,6 +2,7 @@ import {act, getAllByTestId,getByTestId, getNodeText,render, screen} from '@test
 import React from 'react'
 import ReactDOM from 'react-dom';
 import apiClient from '../../services/apiClient.js'
+import bookingDialogService from '../../services/bookingDialogService.js'
 import Homes from './index.jsx'
 
 let container;
@@ -82,4 +83,22 @@ it('should show home location', () => {
 
     expect(homeBookingBtn[0]).toBeTruthy();
 
+  })
+
+  it('should show open home booking dialog when clicking the button', async () => {
+
+    
+  jest.spyOn(bookingDialogService, 'open').mockImplementation(() => {});
+
+  const homeBookingBtn = getAllByTestId(container, 'home-booking-btn');
+
+  homeBookingBtn[0].click();
+
+  expect(bookingDialogService.open).toHaveBeenCalledWith({
+    title: "Test home 1",
+    image: "listing.jpg",
+    location: "Test location 1",
+    price: "1",
+  });
+  
   })

@@ -2,11 +2,6 @@ import {getByTestId, render, screen} from '@testing-library/react'
 import React from 'react'
 import Header from './index.jsx'
 
-it('should show logo', async () => {
-    render(<Header/>)
-
-    expect(screen.getByTestId('logo')).toBeTruthy();
-})
 
 it('should show logo', async () => {
     render(<Header/>)
