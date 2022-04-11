@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import apiClient from '../../services/apiClient';
 import bookingDialogService from '../../services/bookingDialogService';
+import {DialogComponent} from "../DialogComponent"
 
 export default function Homes() {
 
@@ -16,9 +17,14 @@ export default function Homes() {
         });
     }, [])
   
+    const [bookingDialogState, setBookingDialogState] = useState({open : false});
+    const [homeSelectedState, setHomeSelectedState] = useState({});
   let homes;
   
-
+    const handleDialog = () => {
+        //alert(!bookingDialogState.open)
+        setBookingDialogState({open : !bookingDialogState.open})
+    }
   homes = homeState.map((home, index) => {
     return (
         <div className="col-6 col-md-6 col-lg-4 col-xl-3 mb-3" key={ index }>
@@ -33,7 +39,9 @@ export default function Homes() {
                          data-testid="home-booking-btn"
                          type="button"
                          className="btn btn-primary"
-                         onClick={ () => bookingDialogService.open(home)}>Book</button>
+                        onClick={()=> { 
+                            handleDialog() 
+                            setHomeSelectedState(home)}}>Book</button>
                     </div>
                 </div>
             </div>
@@ -48,6 +56,10 @@ export default function Homes() {
         <div className="row">
             {homes}
         </div>
+        <DialogComponent 
+        bookingDialogState={bookingDialogState} 
+        handleDialog={handleDialog}
+        home={homeSelectedState}/>
     </div>
   );
 }
