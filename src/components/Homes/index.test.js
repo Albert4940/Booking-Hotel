@@ -1,104 +1,104 @@
-import {act, getAllByTestId,getByTestId, getNodeText,render, screen} from '@testing-library/react'
-import React from 'react'
-import ReactDOM from 'react-dom';
-import apiClient from '../../services/apiClient.js'
-import bookingDialogService from '../../services/bookingDialogService.js'
-import Homes from './index.jsx'
+// import {act, getAllByTestId,getByTestId, getNodeText,render, screen} from '@testing-library/react'
+// import React from 'react'
+// import ReactDOM from 'react-dom';
+// import apiClient from '../../services/apiClient.js'
+// import bookingDialogService from '../../services/bookingDialogService.js'
+// import Homes from './index.jsx'
 
-let container;
-beforeEach(async () => {
-    container = document.createElement('div');
-    document.body.appendChild(container);
+// let container;
+// beforeEach(async () => {
+//     container = document.createElement('div');
+//     document.body.appendChild(container);
 
-    jest.spyOn(apiClient,'getHomes').mockImplementation(() => {
-        return Promise.resolve([
-            {
-              title: "Test home 1",
-              image: "listing.jpg",
-              location: "Test location 1",
-              price: "1",
-            },
-            {
-              title: "Test home 2",
-              image: "listing.jpg",
-              location: "Test location 2",
-              price: "2",
-            },
-            {
-              title: "Test home 3",
-              image: "listing.jpg",
-              location: "Test location 3",
-              price: "3",
-            }
-          ]);
-    })
+//     jest.spyOn(apiClient,'getHomes').mockImplementation(() => {
+//         return Promise.resolve([
+//             {
+//               title: "Test home 1",
+//               image: "listing.jpg",
+//               location: "Test location 1",
+//               price: "1",
+//             },
+//             {
+//               title: "Test home 2",
+//               image: "listing.jpg",
+//               location: "Test location 2",
+//               price: "2",
+//             },
+//             {
+//               title: "Test home 3",
+//               image: "listing.jpg",
+//               location: "Test location 3",
+//               price: "3",
+//             }
+//           ]);
+//     })
 
-    await act(async () =>{
-        ReactDOM.createRoot(container).render(<Homes/>)
+//     await act(async () =>{
+//         ReactDOM.createRoot(container).render(<Homes/>)
        
-    })
-  });
+//     })
+//   });
 
-afterEach(() => {
-    document.body.removeChild(container);
-    container = null;
- });
+// afterEach(() => {
+//     document.body.removeChild(container);
+//     container = null;
+//  });
 
-it('should show homes', async () => {
+// it('should show homes', async () => {
 
 
-const homes = getAllByTestId(container, 'home')
-expect(homes.length).toBeGreaterThan(0);
-})
+// const homes = getAllByTestId(container, 'home')
+// expect(homes.length).toBeGreaterThan(0);
+// })
 
-it('should show home title', async () => {
+// it('should show home title', async () => {
    
-const homeTitles = getAllByTestId(container,'home-title')
-expect(getNodeText(homeTitles[0])).toBe('Test home 1');
-})
+// const homeTitles = getAllByTestId(container,'home-title')
+// expect(getNodeText(homeTitles[0])).toBe('Test home 1');
+// })
 
-it('should show home image', () =>{
-    const homeImages = getAllByTestId(container, 'home-image')
-    expect(homeImages[0]).toBeTruthy()
-})
+// it('should show home image', () =>{
+//     const homeImages = getAllByTestId(container, 'home-image')
+//     expect(homeImages[0]).toBeTruthy()
+// })
 
-it('should show home location', () => {
+// it('should show home location', () => {
 
-    const homeLocations = getAllByTestId(container, 'home-location');
+//     const homeLocations = getAllByTestId(container, 'home-location');
   
-    expect(getNodeText(homeLocations[0])).toBe('Test location 1');
+//     expect(getNodeText(homeLocations[0])).toBe('Test location 1');
   
-  });
+//   });
   
-  it('should show home price', () => {
+//   it('should show home price', () => {
   
-    const homePrices = getAllByTestId(container, 'home-price');
+//     const homePrices = getAllByTestId(container, 'home-price');
   
-    expect(getNodeText(homePrices[0])).toBe('$1/night');
+//     expect(getNodeText(homePrices[0])).toBe('$1/night');
   
-  });
+//   });
 
-  it('should show booking button', () => {
-    const homeBookingBtn = getAllByTestId(container, 'home-booking-btn');
+//   it('should show booking button', () => {
+//     const homeBookingBtn = getAllByTestId(container, 'home-booking-btn');
 
-    expect(homeBookingBtn[0]).toBeTruthy();
+//     expect(homeBookingBtn[0]).toBeTruthy();
 
-  })
+//   })
 
-  it('should show open home booking dialog when clicking the button', async () => {
+// //   it('should show open home booking dialog when clicking the button', async () => {
 
     
-  jest.spyOn(bookingDialogService, 'open').mockImplementation(() => {});
+// //   jest.spyOn(bookingDialogService, 'open').mockImplementation(() => {});
 
-  const homeBookingBtn = getAllByTestId(container, 'home-booking-btn');
+// //   const homeBookingBtn = getAllByTestId(container, 'home-booking-btn');
 
-  homeBookingBtn[0].click();
+// //   homeBookingBtn[0].click();
 
-  expect(bookingDialogService.open).toHaveBeenCalledWith({
-    title: "Test home 1",
-    image: "listing.jpg",
-    location: "Test location 1",
-    price: "1",
-  });
-  
-  })
+// //   expect(bookingDialogService.open).toHaveBeenCalledWith({
+// //     title: "Test home 1",
+// //     image: "listing.jpg",
+// //     location: "Test location 1",
+// //     price: "1",
+// //   });
+
+// //   })
