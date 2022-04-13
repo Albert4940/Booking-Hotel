@@ -1,7 +1,8 @@
 import {useState, useEffect} from 'react'
 import moment from 'moment';
+import apiClient from '../../services/apiClient';
 
-export const HomeBooking = ({home}) => {
+export const HomeBooking = ({home, handleNotification}) => {
     const [checkInState, setCheckInState] = useState();
     const [checkOutState, setCheckOutState] = useState();
     const [totalPriceState, setTotalPriceState] = useState();
@@ -15,7 +16,7 @@ export const HomeBooking = ({home}) => {
 
         const nights = checkOutDate.diff(checkInDate, 'days');
         const total = nights * price;
-        if(Number.isInteger(total)){
+        if(total > 0){
             setTotalPriceState(total)
         }else{
             setTotalPriceState("--")
@@ -23,33 +24,60 @@ export const HomeBooking = ({home}) => {
 
     }, [checkInState,checkOutState,home]);
 
+    const handleBooking = () => {
+        apiClient.bookHome(home, checkInState, checkOutState).then(response => handleNotification());
+    }
+
     if(!home){
         return <div></div>
     }
     return(
     <>
-         <div data-testid="title">
+         <h2 data-testid="title">
              { home ? home.title : null }
+         </h2>
+
+         <div data-testid="price" className="mb-3">
+             <span className="font-weight-bold text-primary text-large">
+             ${ home ? home.price : null }
+             </span> per night
          </div>
 
-         <div data-testid="price">
-             { home ? home.price : null }
-         </div>
-
-         <input 
-            data-testid="check-in" 
-            type="date"
-            onChange={ e => setCheckInState(e.target.value)}
-         />
+        <div className="form-group">
+            <label htmlFor="checkInDate">Choose your check-in date</label>
+            <input 
+                data-testid="check-in" 
+                type="date"
+                className="form-control"
+                id="checkInDate"
+                onChange={ e => setCheckInState(e.target.value)}
+            />
+        </div>
          
-         <input 
-            data-testid="check-out"
-            type="date"
-            onChange={e => setCheckOutState(e.target.value)}    
-         />
+        <div className="form-group">
+        <label htmlFor="checkOutDate">Choose your check-out date</label>
+        <input
+          data-testid="check-out"
+          className="form-control"
+          id="checkOutDate"
+          type="date"
+          onChange={ e => setCheckOutState(e.target.value) }
+        />
+      </div>
 
-         <div data-testid="total">
-             {totalPriceState}
+      <div data-testid="total" className="my-3 d-flex justify-content-end">
+        <span className="font-weight-bold text-large">
+          Total: ${ totalPriceState }
+        </span>
+      </div>
+
+        <div className="d-flex justify-content-end">
+            <button 
+                data-testid="book-btn"
+                className="btn btn-primary"
+                onClick={handleBooking}>
+                Book
+            </button>
         </div>
     </>
     )

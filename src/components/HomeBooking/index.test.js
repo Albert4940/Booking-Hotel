@@ -71,3 +71,28 @@ it('Should calculate total', () => {
     expect(getByTestId(container, 'total').textContent).toBe('375');
    
 });
+
+it('Should book home after clicking the Book button', () => {
+
+    //spy on apiClient
+    jest.spyOn(apiClient,'bookHome').mockImplementation()
+
+    //select dates
+    //enter check-in date: 2020-12-04
+    fireEvent.change(
+        getByTestId(container,'check-in'),
+        {target:{value: '2020-12-04'}}
+    )
+    
+    //enter check-out date: 2020-12-07
+    fireEvent.change(
+        getByTestId(container,'check-out'),
+        {target:{value: '2020-12-07'}}
+    )
+
+    //click the Book button
+    getByTestId(container, 'book-btn').click();
+    
+    //assert that apiClient booked the home
+   
+});

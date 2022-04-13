@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import apiClient from '../../services/apiClient';
 import bookingDialogService from '../../services/bookingDialogService';
 import {DialogComponent} from "../DialogComponent"
+import Notification from "../Notification"
 
 export default function Homes() {
 
@@ -18,12 +19,19 @@ export default function Homes() {
     }, [])
   
     const [bookingDialogState, setBookingDialogState] = useState({open : false});
+    const [notificationDialogState, setNotificationDialogState] = useState({open : false});
+
     const [homeSelectedState, setHomeSelectedState] = useState({});
   let homes;
   
     const handleDialog = () => {
         //alert(!bookingDialogState.open)
         setBookingDialogState({open : !bookingDialogState.open})
+    }
+
+    const handleNotification = () => {
+        //alert(!bookingDialogState.open)
+        setNotificationDialogState({open : !notificationDialogState.open})
     }
   homes = homeState.map((home, index) => {
     return (
@@ -59,7 +67,12 @@ export default function Homes() {
         <DialogComponent 
         bookingDialogState={bookingDialogState} 
         handleDialog={handleDialog}
-        home={homeSelectedState}/>
+        home={homeSelectedState}
+        handleNotification={handleNotification}/>
+        <Notification 
+            notificationDialogState={notificationDialogState}
+            handleNotification={handleNotification}
+        />
     </div>
   );
 }

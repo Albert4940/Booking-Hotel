@@ -2,7 +2,7 @@ import { Dialog, DialogContent } from '@material-ui/core';
 import { HomeBooking } from '../HomeBooking';
 
 
-export const DialogComponent = ({bookingDialogState, handleDialog, home}) => {
+export const DialogComponent = ({bookingDialogState, handleDialog, home, handleNotification}) => {
 
     return(
         <Dialog 
@@ -12,7 +12,7 @@ export const DialogComponent = ({bookingDialogState, handleDialog, home}) => {
         onClose={() => handleDialog()}
         >
             <DialogContent>
-                <HomeBooking home={home} />
+                <HomeBooking home={home} handleNotification={handleNotification}/>
             </DialogContent>
         </Dialog>
     );
