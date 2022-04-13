@@ -2,7 +2,22 @@
 export const HomeBooking = ({home}) => {
     return(
     <>
-         { home ? home.title : null }
+         <div data-testid="title">
+             { home ? home.title : null }
+         </div>
+
+         <div data-testid="price">
+             { home ? home.price : null }
+         </div>
+
+         <div data-testid="check-in">
+             
+         </div>
+
+         
+         <div data-testid="check-out">
+             
+         </div>
     </>
     )
 }
