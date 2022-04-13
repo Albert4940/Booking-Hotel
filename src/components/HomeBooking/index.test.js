@@ -1,4 +1,4 @@
-import {act, getAllByTestId,getByTestId, getNodeText,render, screen} from '@testing-library/react'
+import {act, fireEvent, getAllByTestId,getByTestId, getNodeText,render, screen} from '@testing-library/react'
 import React from 'react'
 import ReactDOM from 'react-dom';
 import apiClient from '../../services/apiClient.js'
@@ -50,5 +50,24 @@ it('Should show check-in date field', () => {
 it('Should show check-out date field', () => {
 
     expect(getByTestId(container, 'check-out')).toBeTruthy();
+   
+});
+
+it('Should calculate total', () => {
+
+    //enter check-in date: 2020-12-04
+    fireEvent.change(
+        getByTestId(container,'check-in'),
+        {target:{value: '2020-12-04'}}
+    )
+    
+    //enter check-out date: 2020-12-07
+    fireEvent.change(
+        getByTestId(container,'check-out'),
+        {target:{value: '2020-12-07'}}
+    )
+    //assert the total: 3*125=375
+
+    expect(getByTestId(container, 'total').textContent).toBe('375');
    
 });
